@@ -1,12 +1,5 @@
-MT: read_write.o main.o
-	gcc -o MT -lpthread read_write.o main.o
-
-.PHONY: verbose
-verbose: VERBOSE = -DVERBOSE
-verbose: MT
-
-single: single.o read_write.o
-	gcc -o single single.o read_write.o
+MT: read_write.o main.o job.o
+	gcc -o MT -lpthread read_write.o main.o job.o
 
 rand: rand.c
 	gcc -o rand rand.c
@@ -14,13 +7,13 @@ rand: rand.c
 read_write.o: header.h read_write.c
 	gcc -c -o read_write.o read_write.c
 
-single.o: header.h single.c
-	gcc -c -o single.o single.c
+main.o: header.h job.h main.c
+	gcc -c -o main.o main.c
 
-main.o: header.h main.c
-	gcc -c $(VERBOSE) -o main.o main.c
+job.o: job.c job.h
+	gcc -c -o job.o job.c
 
 .PHONY: clean
 clean:
-	@rm -f read_write.o single.o main.o single rand output.txt MT
+	@rm -f read_write.o main.o job.o rand output.txt MT
 	@echo "Cleaned"
