@@ -3,10 +3,10 @@
 
 struct job job_queue[100];
 
-int job_queue_init = 0;
 int job_queue_out = 0;
 int job_queue_in = 0;
 sem_t job_queue_lock; // t
+/* For a better implementation, use two lock for each "push" and "pop". */
 
 sem_t job_count; // s
 
